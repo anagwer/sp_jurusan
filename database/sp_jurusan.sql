@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2025 at 07:07 AM
+-- Generation Time: Jul 21, 2025 at 04:45 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `sp_jurusan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hasil_deteksi`
+--
+
+CREATE TABLE `hasil_deteksi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `jurusan` varchar(100) DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `tingkat_kecocokan` int(11) DEFAULT NULL,
+  `tanggal` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hasil_deteksi`
+--
+
+INSERT INTO `hasil_deteksi` (`id`, `nama`, `jurusan`, `deskripsi`, `tingkat_kecocokan`, `tanggal`) VALUES
+(1, 'test', 'Desain Komunikasi Visual (DKV)', 'Desain Komunikasi Visual (DKV)', 33, '2025-07-21 21:37:03');
 
 -- --------------------------------------------------------
 
@@ -118,6 +140,12 @@ INSERT INTO `rules` (`id`, `kode_rule`, `gejala`, `id_jurusan`) VALUES
 --
 
 --
+-- Indexes for table `hasil_deteksi`
+--
+ALTER TABLE `hasil_deteksi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -139,6 +167,12 @@ ALTER TABLE `rules`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `hasil_deteksi`
+--
+ALTER TABLE `hasil_deteksi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jurusan`

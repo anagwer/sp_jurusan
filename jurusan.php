@@ -18,15 +18,41 @@
         $jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan");
         $no = 1;
         while ($row = mysqli_fetch_array($jurusan)) {
+            $id = $row['id'];
             echo "<tr>
                     <td>$no</td>
                     <td>{$row['nama_jurusan']}</td>
                     <td>{$row['deskripsi']}</td>
                     <td>
-                        <a href='?hapus={$row['id']}' class='btn btn-danger btn-sm'><i class='fas fa-trash'></i></a>
+                        <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editModal$id'><i class='fas fa-edit'></i></button>
+                        <a href='?hapus=$id' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin ingin menghapus?')\"><i class='fas fa-trash'></i></a>
                     </td>
                   </tr>";
             $no++;
+
+            // Modal Edit
+            echo "
+            <div class='modal fade' id='editModal$id' tabindex='-1'>
+              <div class='modal-dialog'>
+                <form method='POST'>
+                  <div class='modal-content'>
+                    <div class='modal-header bg-warning text-white'>
+                      <h5 class='modal-title'>Edit Jurusan</h5>
+                      <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                    </div>
+                    <div class='modal-body'>
+                      <input type='hidden' name='id' value='{$id}'>
+                      <input type='text' name='nama' class='form-control mb-2' value='{$row['nama_jurusan']}' required>
+                      <textarea name='deskripsi' class='form-control'>{$row['deskripsi']}</textarea>
+                    </div>
+                    <div class='modal-footer'>
+                      <button class='btn btn-secondary' data-bs-dismiss='modal'>Batal</button>
+                      <button class='btn btn-warning' name='update'>Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>";
         }
         ?>
     </tbody>
@@ -67,6 +93,15 @@ if (isset($_POST['simpan'])) {
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     mysqli_query($koneksi, "DELETE FROM jurusan WHERE id=$id");
+    echo "<script>window.location='jurusan.php';</script>";
+}
+
+// Update data
+if (isset($_POST['update'])) {
+    $id = $_POST['id'];
+    $nama = $_POST['nama'];
+    $deskripsi = $_POST['deskripsi'];
+    mysqli_query($koneksi, "UPDATE jurusan SET nama_jurusan='$nama', deskripsi='$deskripsi' WHERE id=$id");
     echo "<script>window.location='jurusan.php';</script>";
 }
 ?>
